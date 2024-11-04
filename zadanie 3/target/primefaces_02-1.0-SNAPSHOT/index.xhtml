@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<ui:composition template="/templates/page-template.xhtml">
+
+    <ui:define name="pageContent">
+
+        <p:panel header="Kalkulator">
+
+            <p:messages id="msg" />
+
+            <h:form>
+                <h:panelGrid columns="2" cellpadding="5" styleClass="bottom-space">
+                    <p:outputLabel for="idx" value="Kwota kredytu:" />
+                    <p:inputText id="idx" value="#{calcBB.x}" 
+                        required="true" 
+                        requiredMessage="Należy podać kwotę kredytu"
+                        validatorMessage="Kwota musi być większa niż 10 000">
+                        <f:validateLongRange minimum="10000" />
+                    </p:inputText>
+                    
+                    <p:outputLabel for="idy" value="Okres kredytowania (miesiące):" />
+                    <p:inputText id="idy" value="#{calcBB.y}" 
+                        required="true" 
+                        requiredMessage="Należy podać okres kredytowania"
+                        validatorMessage="Okres kredytowania musi być pomiędzy 48 a 480 miesięcy">
+                        <f:validateLongRange minimum="48" maximum="480"/>
+                    </p:inputText>
+                    
+                    <p:outputLabel for="idz" value="Oprocentowanie:" />
+                    <p:inputText id="idz" value="#{calcBB.z}" 
+                        required="true" 
+                        requiredMessage="Należy podać oprocentowanie"
+                        validatorMessage="Oprocentowanie powinno znajdować się w przedziale od 0.5 do 75 procent">
+                        <f:validateDoubleRange minimum="0.5" maximum="75" />
+                    </p:inputText>
+                    
+                    <p:commandButton value="Oblicz miesięczną ratę kredytu" action="#{calcBB.calc()}" update="msg" />
+                </h:panelGrid>
+                <p:commandLink value="Informacje" action="#{calcBB.info()}" />
+            </h:form>
+
+        </p:panel>
+
+    </ui:define>
+
+</ui:composition>
+</html>
